@@ -18,9 +18,9 @@ func timer(seconds int, input chan string) {
 		sec := (seconds - second) % 60
 		fmt.Printf("\r%02d:%02d ", min, sec)
 
-		if second == lastSecond {
-			command.SayNoWait("あと" + strconv.Itoa(second) + "秒です。終わりそうですか？")
-		} else if (second != 0) && (second%remainSecond == 0) {
+		if (seconds - second) == lastSecond {
+			command.SayNoWait("あと" + strconv.Itoa(lastSecond) + "秒です。終わりそうですか？")
+		} else if ((seconds - second) != 0) && ((seconds - second)%remainSecond == 0) {
 			message := "あと"
 			if min != 0 {
 				message = message + strconv.Itoa(min) + "分"
@@ -34,7 +34,7 @@ func timer(seconds int, input chan string) {
 
 		result := ReadWithTimeout(input)
 		if result != "" {
-			str := trim(result)
+			str := Trim(result)
 			if str == "s" || str == "S" || str == "skip" || str == "Skip" {
 				break
 			}

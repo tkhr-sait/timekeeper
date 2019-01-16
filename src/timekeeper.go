@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func header(title string, index int, lines []string) {
+func Header(title string, index int, lines []string) {
 	fmt.Printf("---[%s]---\n", title)
 	if index-2 >= 0 {
 		fmt.Printf("  %s\n", lines[index-2])
@@ -27,7 +27,7 @@ func header(title string, index int, lines []string) {
 	}
 	fmt.Printf("---------------------\n")
 }
-func trim(str string) string {
+func Trim(str string) string {
 	return strings.TrimRight(strings.TrimRight(str, "\n"), "\r")
 }
 
@@ -52,7 +52,7 @@ func main() {
 			break
 		}
 		// check format
-		lines = append(lines, trim(line))
+		lines = append(lines, Trim(line))
 	}
 	file.Close()
 
@@ -64,7 +64,7 @@ func main() {
 
 	for index, line := range lines {
 		command.ClearScreen()
-		header(infilepath, index, lines)
+		Header(infilepath, index, lines)
 		str := strings.Split(line, ",")
 		switch str[0] {
 		case "timer":
