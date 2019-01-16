@@ -10,7 +10,7 @@ import (
 var remainSecond int = 30
 var lastSecond int = 30
 
-func timer(seconds int, input chan string) {
+func Timer(seconds int, input chan string) {
 	second := 0
 	for second < seconds {
 		second++

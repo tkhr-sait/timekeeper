@@ -30,19 +30,20 @@ func Header(title string, index int, lines []string) {
 func Trim(str string) string {
 	return strings.TrimRight(strings.TrimRight(str, "\n"), "\r")
 }
-
+func ErrorExit(message string) {
+	fmt.Println(message)
+	os.Exit(-1)
+}
 func main() {
 	// check args
 	if len(os.Args) != 2 {
-		fmt.Println("usage: " + os.Args[0] + " [scenario.txt]")
-		os.Exit(-1)
+		ErrorExit("usage: " + os.Args[0] + " [scenario.txt]")
 	}
 
 	infilepath := os.Args[1]
 	file, err := os.Open(infilepath)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(-1)
+		ErrorExit(err.Error())
 	}
 	var lines []string
 	scenario := bufio.NewReader(file)
@@ -52,6 +53,31 @@ func main() {
 			break
 		}
 		// check format
+		str := strings.Split(Trim(line), ",")
+		switch str[0] {
+		case "timer":
+			if len(str) != 3 {
+				ErrorExit("timerコマンド形式不正 timer,[message],[minutes] 入力=" + Trim(line))
+			}
+			_, err := strconv.Atoi(str[2])
+			if err != nil {
+				ErrorExit("[minutes]は数値 timer,[message],[minutes] 入力=" + Trim(line))
+			}
+		case "open":
+			if len(str) != 2 {
+				ErrorExit("openコマンド形式不正 open,[url] 入力=" + Trim(line))
+			}
+		case "say":
+			if len(str) != 2 {
+				ErrorExit("sayコマンド形式不正 say,[message] 入力=" + Trim(line))
+			}
+		case "wait":
+			if len(str) != 2 {
+				ErrorExit("waitコマンド形式不正 wait,[message] 入力=" + Trim(line))
+			}
+		default:
+			ErrorExit("指定可能なコマンド timer,open,say,wait 入力=" + Trim(line))
+		}
 		lines = append(lines, Trim(line))
 	}
 	file.Close()
@@ -72,7 +98,7 @@ func main() {
 			fmt.Println(message)
 			command.Say(message)
 			i, _ := strconv.Atoi(str[2])
-			timer(i*60, input)
+			Timer(i*60, input)
 		case "open":
 			fmt.Println(str[1])
 			command.Open(str[1])
