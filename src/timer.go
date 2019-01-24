@@ -10,7 +10,7 @@ import (
 var remainSecond int = 30
 var lastSecond int = 30
 
-func Timer(seconds int, input chan string) {
+func Timer(seconds int) {
 	second := 0
 	for second < seconds {
 		second++
@@ -32,10 +32,22 @@ func Timer(seconds int, input chan string) {
 			command.SayNoWait(message)
 		}
 
-		result := ReadWithTimeout(input)
+		result := ReadWithTimeout(500)
 		if result != "" {
 			str := Trim(result)
 			if str == "s" || str == "S" || str == "skip" || str == "Skip" {
+				break
+			}
+			i, err := strconv.Atoi(str)
+			if err == nil {
+				seconds = i * 60
+				second = 0
+			}
+		}
+		result = command.ReadWithTimeout(500)
+		if result != "" {
+			str := Trim(result)
+			if str == "s" {
 				break
 			}
 			i, err := strconv.Atoi(str)

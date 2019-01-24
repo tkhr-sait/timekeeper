@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<package>
+  <job>
+  <?job error="True" debug="True" ?>
+    <runtime />
+    <script language="JScript">
+    <![CDATA[
+      var RecoContextObj=WScript.CreateObject("SAPI.SpInProcRecoContext","Recog_");
+      RecoContextObj.Recognizer.AudioInput=RecoContextObj.Recognizer.GetAudioInputs().Item(0);
+      var RecoGrammarObj=RecoContextObj.CreateGrammar();
+
+      SKIP="がいどさんつぎ"
+      WAIT="がいどさんまって"
+
+      RecoGrammarObj.Reset(0);
+      var RuleObj = RecoGrammarObj.Rules.Add("TopLevelRule",33);
+      RuleObj.InitialState.AddWordTransition(null,SKIP);
+      RuleObj.InitialState.AddWordTransition(null,WAIT);
+      RecoGrammarObj.Rules.Commit();
+      RecoGrammarObj.CmdSetRuleState("TopLevelRule",1);
+
+      while(true) WScript.Sleep(1000);
+
+      function Recog_Recognition(StreamNumber,StreamPosition,RecognitionType,Result){
+        if (Result.PhraseInfo.GetText() == SKIP) {
+          WScript.Echo("s");
+        } else if (Result.PhraseInfo.GetText() == WAIT) {
+          WScript.Echo("3");
+        }
+      }
+    ]]>
+    </script>
+  </job>
+</package>

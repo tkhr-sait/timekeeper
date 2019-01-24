@@ -5,21 +5,20 @@ import (
 	"time"
 )
 
-var timeout time.Duration = 1000
+var input chan string
 
-func InitStdin() chan string {
-	input := make(chan string, 1)
-	go GetInput(input)
-	return input
+func InitStdin() {
+	input = make(chan string, 1)
+	go GetInput()
 }
-func GetInput(input chan string) {
+func GetInput() {
 	in := bufio.NewReader(os.Stdin)
 	for {
 		result, _ := in.ReadString('\n')
 		input <- result
 	}
 }
-func ReadWithTimeout(input chan string) string {
+func ReadWithTimeout(timeout time.Duration) string {
 	select {
 	case result := <-input:
 		return result

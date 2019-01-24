@@ -83,7 +83,8 @@ func main() {
 	file.Close()
 
 	// stdin
-	input := InitStdin()
+	InitStdin()
+	command.InitRecog()
 	// say
 	command.InitSay()
 	defer command.DestroySay()
@@ -98,7 +99,7 @@ func main() {
 			fmt.Println(message)
 			command.Say(message)
 			i, _ := strconv.Atoi(str[2])
-			Timer(i*60, input)
+			Timer(i*60)
 		case "open":
 			fmt.Println(str[1])
 			command.Open(str[1])
@@ -109,8 +110,12 @@ func main() {
 			fmt.Print(str[1] + " (Enter)")
 			command.Say(str[1])
 			for {
-				ret := ReadWithTimeout(input)
+				ret := ReadWithTimeout(500)
 				if ret != "" {
+					break
+				}
+				ret = Trim(command.ReadWithTimeout(500))
+				if ret == "s" {
 					break
 				}
 			}
