@@ -27,6 +27,6 @@ recognizer.commands = commands
 recognizer.startListening()
 
 let loop = RunLoop.current
-let mode = loop.currentMode ?? RunLoopMode.defaultRunLoopMode
+let mode = loop.currentMode ?? RunLoop.Mode.default
 while ( loop.run(mode: mode,before: Date(timeIntervalSinceNow: 0.5) ) && !dispatcher.stop ) {
 }

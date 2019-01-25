@@ -19,6 +19,6 @@ bitsadmin /TRANSFER htmlget https://github.com/tkhr-sait/timekeeper/raw/master/r
 |command|動作|
 |-------|--------|
 |say,[message]|指定されたmessageを喋ります。|
-|timer,[message],[minutes]|タイマー（分）です。's(Enter)','S(Enter)','skip(Enter)','Skip(Enter)'でタイマースキップ。'数値(Enter)'で時間延長します。|
-|wait,[message]|指定されたmessageを喋ったあと、'(Enter)'が押されるまで待ちます。|
+|timer,[message],[minutes]|タイマー（分）です。's(Enter)','S(Enter)','skip(Enter)','Skip(Enter)'もしくは"がいどさんつぎ"でタイマースキップ。'数値(Enter)'もしくは"がいどさんまって"で時間延長します。|
+|wait,[message]|指定されたmessageを喋ったあと、'(Enter)'が押されるまで待ちます。"がいどさんつぎ"でも進みます。|
 |open,[url]|urlを開きます。|
