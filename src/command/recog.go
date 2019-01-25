@@ -36,8 +36,9 @@ func ReadWithTimeout(timeout time.Duration) string {
 func _recog() *exec.Cmd {
 	if runtime.GOOS == "windows" {
 		return exec.Command("cscript", "//Nologo", os.TempDir() + "/recog.wsf")
-	} else {
-		return exec.Command(os.TempDir() + "/recog.swift")
+	} else if runtime.GOOS == "darwin" {
+		// FIXME やりかた
+		return exec.Command("swift","/tmp/recog.swift")
 	}
 	return nil
 }
