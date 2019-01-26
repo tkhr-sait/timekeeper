@@ -10,7 +10,7 @@
       var RecoGrammarObj=RecoContextObj.CreateGrammar();
 
       SKIP="がいどさんつぎ"
-      WAIT="がいどさんまって"
+      WAIT="がいどさんまて"
 
       RecoGrammarObj.Reset(0);
       var RuleObj = RecoGrammarObj.Rules.Add("TopLevelRule",33);

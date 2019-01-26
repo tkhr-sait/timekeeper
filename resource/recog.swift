@@ -5,20 +5,19 @@ import AppKit
 
 // NSSpeachRecognizer
 class Dispatcher: NSObject, NSSpeechRecognizerDelegate {
-  var stop: Bool
-  override init (){ stop = false }
-  func speechRecognizer(didRecognizeCommand command: String) {
+  func speechRecognizer(_ sender: NSSpeechRecognizer,didRecognizeCommand command: String) {
     if (command == "がいどさんつぎ") {
       print("s")
-    } else if (command == "がいどさんまって") {
+    } else if (command == "がいどさんまて") {
       print("3")
     }
+		fflush(stdout)
   }
 }
 
 var commands: [String] = []
 commands.append("がいどさんつぎ")
-commands.append("がいどさんまって")
+commands.append("がいどさんまて")
 
 let dispatcher = Dispatcher()
 let recognizer = NSSpeechRecognizer()!
@@ -28,5 +27,5 @@ recognizer.startListening()
 
 let loop = RunLoop.current
 let mode = loop.currentMode ?? RunLoop.Mode.default
-while ( loop.run(mode: mode,before: Date(timeIntervalSinceNow: 0.5) ) && !dispatcher.stop ) {
+while ( loop.run(mode: mode,before: Date(timeIntervalSinceNow: 0.5) ) ) {
 }
